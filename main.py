@@ -73,7 +73,7 @@ def setMileStones(count):
 def printProgress(i):
   global progressIndex
   global milestones
-  if i == milestones[progressIndex]:
+  while i >= milestones[progressIndex]:
     perc = (progressIndex+1)*10
     print(str(perc)+'%')
     progressIndex += 1
@@ -102,6 +102,7 @@ def handleSection(section):
       files.append(eFile["path"])
 
   if(len(files) == 0):
+    print("Sudden exit")
     sys.exit("invalid section: no files found'")
   else:
     print(str(len(files)) + ' files used')
@@ -113,7 +114,8 @@ def handleSection(section):
     printProgress(i)
     maxi = len(files)-1
     n = random.randint(0, maxi)
-    while n in past: n = random.randint(0, maxi)
+    while n in past:
+      n = random.randint(0, maxi)
     past.append(n)
     past.popleft()
     file = files[n]
