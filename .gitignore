@@ -2,3 +2,4 @@ settings.json
 build
 .vscode
 __pycache__
+settings.dummy.json

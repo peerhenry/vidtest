@@ -22,7 +22,11 @@ def handle(index, tpath, trackLength):
   media = x.media_new(tpath)
   media.parse()
   duration = media.get_duration()-1
-  playlist.addTrack(index, tpath, duration, trackLength, 0, duration)
+  if duration < 0:
+    print("error: duration is 0 for file " + str(tpath))
+    print("media state: " + str(media.get_state()))
+  else:
+    playlist.addTrack(index, tpath, duration, trackLength, 0, duration)
 
 def handleSegment(index, tpath, duration, trackLength, segstart, segstop):
   media = x.media_new(tpath)
