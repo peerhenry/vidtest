@@ -1,10 +1,12 @@
 
+- pip install python-vlc
+- needs a file settings.json (see example below)
 - run with command `python main.py`
 - python and vlc must have the same architecture (64 bit / 32 bit)
-- norepeat means if a file is chosen it wont be repeated for at least this amount
+- norepeat means if a file is chosen it wont be repeated for at least this number
 
 
-example config
+example settings.json
 
 {
   "name": "build\\test",
