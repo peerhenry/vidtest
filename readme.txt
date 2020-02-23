@@ -4,7 +4,7 @@
 - run with command `python main.py`
 - python and vlc must have the same architecture (64 bit / 32 bit)
 - norepeat means if a file is chosen it wont be repeated for at least this number
-
+- segments can be specified in files if you only want to include tracks from those specific segments
 
 example settings.json
 
@@ -20,7 +20,15 @@ example settings.json
         }
       ],
       "files": [
-       
+        { 
+          path: "blabla"
+          "segments": [
+            {
+              "segmentStartMs": "0",
+              "segmentEndMs": "30000"
+            }
+          ]
+        }
       ],
       "options": {
         "segmentCount": 3,

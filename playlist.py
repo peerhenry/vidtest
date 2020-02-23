@@ -18,7 +18,7 @@ class PlayList:
     stop = trackLength
 
     if(duration > trackLength):
-      if(trackLength < segstop - segstart):
+      if(trackLength < (segstop - segstart)):
         pos = random.randint(segstart, segstop-trackLength)
         start = pos/1000
         stop = (pos+trackLength)/1000

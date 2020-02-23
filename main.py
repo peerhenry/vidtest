@@ -28,7 +28,7 @@ def handle(index, tpath, trackLength):
   else:
     playlist.addTrack(index, tpath, duration, trackLength, 0, duration)
 
-def handleSegment(index, tpath, duration, trackLength, segstart, segstop):
+def handleSegment(index, tpath, trackLength, segstart, segstop):
   media = x.media_new(tpath)
   media.parse()
   duration = media.get_duration()-1
@@ -96,10 +96,21 @@ def handleSection(section):
     extra = getFiles( dir["path"], dir["includeSubDirs"], dir["exclusions"] )
     files.extend( extra )
 
+  # dictionary for selecting only specific segments from given files
+  fileSegments = {}
+
   # append single files
   if 'files' in section:
     for eFile in section["files"]:
       files.append(eFile["path"])
+      if 'segments' in eFile:
+        segments = []
+        for segment in eFile["segments"]:
+          segments.append({
+            "start": segment["segmentStartMs"],
+            "stop": segment["segmentEndMs"]
+          })
+        fileSegments[eFile["path"]] = segments
 
   if(len(files) == 0):
     print("Sudden exit")
@@ -119,7 +130,14 @@ def handleSection(section):
     past.append(n)
     past.popleft()
     file = files[n]
-    handle(i, file, segmentLength)
+    if file in fileSegments:
+      segments = fileSegments[file]
+      k = random.randint(0, len(segments)-1)
+      segment = segments[k]
+      segstart = int(segment["start"])
+      segstop = int(segment["stop"])
+      handleSegment(i, file, segmentLength, segstart, segstop)
+    else: handle(i, file, segmentLength)
 
 settings = json.load(open('settings.json'))
 for section in settings["sections"]:
